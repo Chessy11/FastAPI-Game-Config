@@ -12,7 +12,7 @@ app.include_router(GameConfigRoute.router)
 @app.on_event("startup")
 async def startup():
     async with engine.begin() as conn:
-        await conn.run_sync(Models.GameConfigModel.metadata.create_all)
+        await conn.run_sync(Models.GameModel.metadata.create_all)
 
 
 @app.on_event("shutdown")
