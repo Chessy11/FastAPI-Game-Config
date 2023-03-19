@@ -1,5 +1,6 @@
 from pydantic import BaseModel, HttpUrl
 
+from app.schemas.BonusSchema import BonusOutSchema
 from app.schemas.SymbolSchema import SymbolOutSchema
 
 
@@ -19,7 +20,7 @@ class GameOutSchema(BaseModel):
     banner_img: HttpUrl
     game_rtp: float
     symbols: list[SymbolOutSchema]
-    # bonuses: list["BonusOutSchema"]
+    bonuses: list[BonusOutSchema]
 
     class Config:
         orm_mode = True
