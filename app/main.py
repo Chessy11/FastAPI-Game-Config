@@ -1,12 +1,13 @@
 from fastapi import FastAPI
 
 from app.db import engine
-from app.routers import GameConfigRoute
+from app.routers import GameRoute, SymbolRoute
 from app.models import Models
 
 app = FastAPI()
 
-app.include_router(GameConfigRoute.router)
+app.include_router(GameRoute.router)
+app.include_router(SymbolRoute.router)
 
 
 @app.on_event("startup")

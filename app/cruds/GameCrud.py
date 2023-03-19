@@ -16,7 +16,7 @@ async def get_games(session: AsyncSession, skip: int = 0, limit: int = 20):
     return result.scalars().fetchall()
 
 
-async def create_game_config(session: AsyncSession, game: GameInSchema):
+async def create_game(session: AsyncSession, game: GameInSchema):
     new_game = GameModel(**game.dict())
     session.add(new_game)
     await session.commit()
@@ -25,4 +25,4 @@ async def create_game_config(session: AsyncSession, game: GameInSchema):
 
 
 async def get_game_by_id(game_id: int, session: AsyncSession):
-    return await session.get(GameModel, game_id)
+    return await session.get(GameModel, game_id, options=[selectinload(GameModel.symbols)])

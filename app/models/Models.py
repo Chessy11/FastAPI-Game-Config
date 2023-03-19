@@ -13,6 +13,10 @@ class GameModel(Base):
     banner_img = Column(String, nullable=False)
     game_rtp = Column(Float, nullable=False)
 
+    symbols = relationship("SymbolModel", back_populates="owner")
+
+    bonuses = relationship("BonusModel", back_populates="owner", lazy="joined")
+
 
 class SymbolModel(Base):
     __tablename__ = "symbols"
@@ -20,6 +24,8 @@ class SymbolModel(Base):
     game_id = Column(Integer, ForeignKey("games.game_id", ondelete="CASCADE"), nullable=False)
     symbol_name = Column(String, nullable=False)
     symbol_type = Column(Integer, nullable=False)
+
+    owner = relationship("GameModel", back_populates="symbols")
 
 
 class BonusModel(Base):
@@ -29,6 +35,8 @@ class BonusModel(Base):
     symbol_id = Column(Integer, ForeignKey("symbols.symbol_id", ondelete="CASCADE"), nullable=False, index=True)
     bonus_type = Column(Integer, nullable=False)
     bonus_name = Column(String, nullable=False)
+
+    owner = relationship("GameModel", back_populates="bonuses")
 
 
 class ReelsModel(Base):
