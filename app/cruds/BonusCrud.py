@@ -19,3 +19,7 @@ async def get_bonuses_by_game_id(session: AsyncSession, game_id: int):
         .where(BonusModel.game_id == game_id)
     )
     return result.scalars().fetchall()
+
+
+async def get_bonus_by_id(bonus_id: int, session: AsyncSession):
+    return await session.get(BonusModel, bonus_id)

@@ -3,7 +3,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db import get_session
-from app.schemas.SymbolSchema import SymbolInSchema
+from app.schemas.SymbolSchema import SymbolInSchema, PaytableInSchema
 from app.cruds import SymbolCrud
 
 router = APIRouter()
@@ -30,3 +30,18 @@ async def get_symbol_by_id(symbol_id: int, session: AsyncSession = Depends(get_s
     if symbol is None:
         raise HTTPException(status_code=404, detail="Symbol not found")
     return symbol
+
+
+@router.post("/create-paytable", tags=["symbol"], status_code=201)
+async def create_paytable_config(create_paytable: PaytableInSchema, session: AsyncSession = Depends(get_session)):
+    try:
+        new_paytable = await SymbolCrud.create_paytable(session, create_paytable)
+    except IntegrityError as ie:
+        raise HTTPException(status_code=400, detail=str(ie.orig))
+    return new_paytable
+
+
+@router.get("/paytables/{symbol_id}", tags=["symbol"], status_code=200)
+async def get_paytables_by_symbol_id(symbol_id: int, session: AsyncSession = Depends(get_session)):
+    paytables = await SymbolCrud.get_paytables_by_symbol_id(session, symbol_id)
+    return paytables

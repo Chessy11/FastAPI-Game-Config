@@ -14,8 +14,8 @@ class GameModel(Base):
     game_rtp = Column(Float, nullable=False)
 
     symbols = relationship("SymbolModel", back_populates="owner")
-
     bonuses = relationship("BonusModel", back_populates="owner", lazy="joined")
+    reels = relationship("ReelsModel", back_populates="owner", lazy="joined")
 
 
 class SymbolModel(Base):
@@ -26,6 +26,7 @@ class SymbolModel(Base):
     symbol_type = Column(Integer, nullable=False)
 
     owner = relationship("GameModel", back_populates="symbols")
+    paytables = relationship("PaytableModel", back_populates="owner", lazy="joined")
 
 
 class BonusModel(Base):
@@ -45,6 +46,9 @@ class ReelsModel(Base):
     game_id = Column(Integer, ForeignKey("games.game_id", ondelete="CASCADE"), nullable=False)
     position = Column(Integer, nullable=False)
 
+    owner = relationship("GameModel", back_populates="reels")
+    symbols = relationship("ReelSymbolsModel", back_populates="owner", lazy="joined")
+
 
 class ReelSymbolsModel(Base):
     __tablename__ = "reel_symbols"
@@ -52,6 +56,8 @@ class ReelSymbolsModel(Base):
     symbol_id = Column(Integer, ForeignKey("symbols.symbol_id", ondelete="CASCADE"), nullable=False)
     reel_id = Column(Integer, ForeignKey("reels.reel_id", ondelete="CASCADE"), nullable=False)
     location = Column(Integer, nullable=False)
+
+    owner = relationship("ReelsModel", back_populates="symbols")
 
 
 class BonusWinModel(Base):
@@ -68,3 +74,5 @@ class PaytableModel(Base):
     symbol_id = Column(Integer, ForeignKey("symbols.symbol_id", ondelete="CASCADE"), nullable=False)
     s_count = Column(Integer, nullable=False)
     s_payout = Column(Integer, nullable=False)
+
+    owner = relationship("SymbolModel", back_populates="paytables")

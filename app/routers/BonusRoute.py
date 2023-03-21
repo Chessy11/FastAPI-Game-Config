@@ -22,3 +22,11 @@ async def create_bonus_config(create_bonus: BonusSchema.BonusInSchema, session: 
 async def get_bonuses_by_game_id(game_id: int, session: AsyncSession = Depends(get_session)):
     bonuses = await BonusCrud.get_bonuses_by_game_id(session, game_id)
     return bonuses
+
+
+@router.get("/bonus/{bonus_id}", tags=["bonus"], status_code=200)
+async def get_bonus_by_id(bonus_id: int, session: AsyncSession = Depends(get_session)):
+    bonus = await BonusCrud.get_bonus_by_id(bonus_id, session)
+    if bonus is None:
+        raise HTTPException(status_code=404, detail="Bonus not found")
+    return bonus
