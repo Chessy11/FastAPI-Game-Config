@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Float
+from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.orm import relationship
 
 from app.db import Base
@@ -29,15 +30,28 @@ class SymbolModel(Base):
     paytables = relationship("PaytableModel", back_populates="owner", lazy="joined")
 
 
-class BonusModel(Base):
-    __tablename__ = "bonuses"
-    bonus_id = Column(Integer, primary_key=True, index=True)
+class FreeSpinBonusModel(Base):
+    __tablename__ = "free_spin_bonus"
+    fs_bonus_id = Column(Integer, primary_key=True, index=True)
     game_id = Column(Integer, ForeignKey("games.game_id", ondelete="CASCADE"), nullable=False)
     symbol_id = Column(Integer, ForeignKey("symbols.symbol_id", ondelete="CASCADE"), nullable=False, index=True)
     bonus_type = Column(Integer, nullable=False)
-    bonus_name = Column(String, nullable=False)
 
     owner = relationship("GameModel", back_populates="bonuses")
+    bonus_wins = relationship("FreeSpinBonusWinModel", back_populates="owner", lazy="joined")
+
+
+class ChooseBonusModel(Base):
+    __tablename__ = "choose_bonus"
+    c_bonus_id = Column(Integer, primary_key=True, index=True)
+    game_id = Column(Integer, ForeignKey("games.game_id", ondelete="CASCADE"), nullable=False)
+    symbol_id = Column(Integer, ForeignKey("symbols.symbol_id", ondelete="CASCADE"), nullable=False, index=True)
+    bonus_type = Column(Integer, nullable=False)
+    choose_count = Column(Integer, nullable=False)
+    win_list = Column(ARRAY(Integer), nullable=False)
+
+    owner = relationship("GameModel", back_populates="bonuses")
+    bonus_wins = relationship("ChooseBonusWinModel", back_populates="owner", lazy="joined")
 
 
 class ReelsModel(Base):
@@ -60,12 +74,14 @@ class ReelSymbolsModel(Base):
     owner = relationship("ReelsModel", back_populates="symbols")
 
 
-class BonusWinModel(Base):
-    __tablename__ = "bonus_wins"
-    bw_id = Column(Integer, primary_key=True, index=True)
-    bonus_id = Column(Integer, ForeignKey("bonuses.bonus_id", ondelete="CASCADE"), nullable=False)
-    b_count = Column(Integer, nullable=False)
-    b_payout = Column(Integer, nullable=False)
+class FreeSpinBonusWinModel(Base):
+    __tablename__ = "free_spin_bonus_wins"
+    fsbw_id = Column(Integer, primary_key=True, index=True)
+    fs_bonus_id = Column(Integer, ForeignKey("free_spin_bonus.fs_bonus_id", ondelete="CASCADE"), nullable=False)
+    symbol_count = Column(Integer, nullable=False)
+    free_spin_count = Column(Integer, nullable=False)
+
+    owner = relationship("FreeSpinBonusModel", back_populates="bonus_wins")
 
 
 class PaytableModel(Base):

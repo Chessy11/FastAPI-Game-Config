@@ -1,19 +1,21 @@
 from pydantic import BaseModel
 
 
-class BonusInSchema(BaseModel):
+class ChooseBonusInSchema(BaseModel):
     game_id: int
     symbol_id: int
-    bonus_name: str
     bonus_type: int
+    choose_count: int
+    win_list: list[int]
 
 
-class BonusOutSchema(BaseModel):
+class ChooseBonusOutSchema(BaseModel):
     bonus_id: int
     game_id: int
     symbol_id: int
-    bonus_name: str
     bonus_type: int
+    choose_count: int
+    win_list: list[int]
 
     class Config:
         orm_mode = True

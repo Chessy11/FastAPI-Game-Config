@@ -1,6 +1,7 @@
 from pydantic import BaseModel, HttpUrl
 
-from app.schemas.BonusSchema import BonusOutSchema
+from app.schemas.ChooseBonusSchema import ChooseBonusOutSchema
+from app.schemas.FreeSpinBonusSchema import FreeSpinBonusOutSchema
 from app.schemas.SymbolSchema import SymbolOutSchema
 from app.schemas.ReelSchema import ReelOutSchema
 
@@ -21,7 +22,7 @@ class GameOutSchema(BaseModel):
     banner_img: HttpUrl
     game_rtp: float
     symbols: list[SymbolOutSchema]
-    bonuses: list[BonusOutSchema]
+    bonuses: list[FreeSpinBonusOutSchema, ChooseBonusOutSchema]
     reels: list[ReelOutSchema]
 
     class Config:
