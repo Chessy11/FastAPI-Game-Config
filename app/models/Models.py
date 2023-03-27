@@ -15,7 +15,8 @@ class GameModel(Base):
     game_rtp = Column(Float, nullable=False)
 
     symbols = relationship("SymbolModel", back_populates="owner")
-    bonuses = relationship("BonusModel", back_populates="owner", lazy="joined")
+    free_spin_bonuses = relationship("FreeSpinBonusModel", back_populates="owner", lazy="joined")
+    choose_bonuses = relationship("ChooseBonusModel", back_populates="owner", lazy="joined")
     reels = relationship("ReelsModel", back_populates="owner", lazy="joined")
 
 
@@ -37,7 +38,7 @@ class FreeSpinBonusModel(Base):
     symbol_id = Column(Integer, ForeignKey("symbols.symbol_id", ondelete="CASCADE"), nullable=False, index=True)
     bonus_type = Column(Integer, nullable=False)
 
-    owner = relationship("GameModel", back_populates="bonuses")
+    owner = relationship("GameModel", back_populates="free_spin_bonuses")
     bonus_wins = relationship("FreeSpinBonusWinModel", back_populates="owner", lazy="joined")
 
 
@@ -50,8 +51,7 @@ class ChooseBonusModel(Base):
     choose_count = Column(Integer, nullable=False)
     win_list = Column(ARRAY(Integer), nullable=False)
 
-    owner = relationship("GameModel", back_populates="bonuses")
-    bonus_wins = relationship("ChooseBonusWinModel", back_populates="owner", lazy="joined")
+    owner = relationship("GameModel", back_populates="choose_bonuses")
 
 
 class ReelsModel(Base):

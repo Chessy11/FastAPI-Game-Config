@@ -22,7 +22,8 @@ class GameOutSchema(BaseModel):
     banner_img: HttpUrl
     game_rtp: float
     symbols: list[SymbolOutSchema]
-    bonuses: list[FreeSpinBonusOutSchema, ChooseBonusOutSchema]
+    free_spin_bonuses: list[FreeSpinBonusOutSchema]
+    choose_bonuses: list[ChooseBonusOutSchema]
     reels: list[ReelOutSchema]
 
     class Config:
