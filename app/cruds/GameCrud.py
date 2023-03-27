@@ -26,3 +26,10 @@ async def create_game(session: AsyncSession, game: GameInSchema):
 
 async def get_game_by_id(game_id: int, session: AsyncSession):
     return await session.get(GameModel, game_id, options=[selectinload(GameModel.symbols)])
+
+
+async def publish_game(game_id: int, session: AsyncSession):
+    game = await session.get(GameModel, game_id)
+    game.isPublished = True
+    await session.commit()
+    return game

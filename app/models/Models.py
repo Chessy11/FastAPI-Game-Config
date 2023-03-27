@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Float
+from sqlalchemy import Column, Integer, String, ForeignKey, Float, Boolean
 from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.orm import relationship
 
@@ -13,6 +13,7 @@ class GameModel(Base):
     game_type = Column(String, nullable=False)
     banner_img = Column(String, nullable=False)
     game_rtp = Column(Float, nullable=False)
+    isPublished = Column(Boolean, nullable=False, default=False)
 
     symbols = relationship("SymbolModel", back_populates="owner")
     free_spin_bonuses = relationship("FreeSpinBonusModel", back_populates="owner", lazy="joined")

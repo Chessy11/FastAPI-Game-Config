@@ -21,6 +21,7 @@ class GameOutSchema(BaseModel):
     game_type: str
     banner_img: HttpUrl
     game_rtp: float
+    isPublished: bool
     symbols: list[SymbolOutSchema]
     free_spin_bonuses: list[FreeSpinBonusOutSchema]
     choose_bonuses: list[ChooseBonusOutSchema]
