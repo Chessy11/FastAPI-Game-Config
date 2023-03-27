@@ -21,7 +21,7 @@ async def create_symbol(session: AsyncSession, symbol: SymbolInSchema):
     return new_symbol
 
 
-async def get_symbol_by_id(symbol_id: int, session: AsyncSession):
+async def get_symbol_by_id(session: AsyncSession, symbol_id: int):
     return await session.get(SymbolModel, symbol_id)
 
 
@@ -33,7 +33,7 @@ async def create_paytable(session: AsyncSession, paytable: PaytableInSchema):
     return new_paytable
 
 
-async def get_paytable_by_symbol_id(symbol_id: int, session: AsyncSession):
+async def get_paytables_by_symbol_id(session: AsyncSession, symbol_id: int):
     result = await session.execute(
         select(PaytableModel)
         .where(PaytableModel.symbol_id == symbol_id)

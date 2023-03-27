@@ -42,6 +42,6 @@ async def create_paytable_config(create_paytable: PaytableInSchema, session: Asy
 
 
 @router.get("/paytables/{symbol_id}", tags=["symbol"], status_code=200)
-async def get_paytables_by_symbol_id(symbol_id: int, session: AsyncSession = Depends(get_session)):
+async def paytables_by_symbol_id(symbol_id: int, session: AsyncSession = Depends(get_session)):
     paytables = await SymbolCrud.get_paytables_by_symbol_id(session, symbol_id)
     return paytables
