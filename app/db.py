@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 DATABASE_URL = URL.create(
     drivername="postgresql+asyncpg",
     username="postgres",
-    password="potoli11",
+    password="postgres",
     host="localhost",
     port=5432,
     database="gamedb"
