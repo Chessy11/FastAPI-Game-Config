@@ -1,6 +1,6 @@
 build with docker 
 ====================
-go to the [db.py](db.py) file and change database settings
+go to the [db.py](app/db.py) file and change database settings
 ```python 
 DATABASE_URL = URL.create(
     drivername="postgresql+asyncpg",
