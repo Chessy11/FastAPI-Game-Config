@@ -13,7 +13,8 @@ async def get_games(session: AsyncSession, skip: int = 0, limit: int = 20):
         .offset(skip)
         .limit(limit)
     )
-    return result.scalars().fetchall()
+    return result.scalars().unique().fetchall()
+
 
 
 async def create_game(session: AsyncSession, game: GameInSchema):
