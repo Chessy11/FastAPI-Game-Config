@@ -13,3 +13,5 @@ steps:
   args:
   - 'push'
   - 'europe-central2-docker.pkg.dev/striking-arbor-382117/game-config-service:$BRANCH_NAME-$SHORT_SHA'
+options:
+  logging: CLOUD_LOGGING_ONLY
