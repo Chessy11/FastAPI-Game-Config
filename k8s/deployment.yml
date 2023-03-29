@@ -1,6 +1,14 @@
 apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+  labels:
+    name: dev
+---
+apiVersion: v1
 kind: Service
 metadata:
+  namespace: dev
   name: game-config-service
   labels:
     app: game-config-service
@@ -16,15 +24,16 @@ spec:
 apiVersion: networking.k8s.io/v1 
 kind: Ingress
 metadata:
+  namespace: dev
   name: game-config-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$1   
 spec:
   rules:
-    - host: digitaldice.local
+    - host: digitaldicegame.com
       http:
         paths:
-          - path: /
+          - path: /game-config-service(/|$)(.*)
             pathType: Prefix
             backend:
               service:
@@ -35,6 +44,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: dev
   name: game-config-service
   labels:
     app: game-config-service
