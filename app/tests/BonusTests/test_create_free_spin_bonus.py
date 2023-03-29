@@ -3,6 +3,7 @@ from app.main import app
 
 client = TestClient(app)
 
+
 def test_create_bonus_config():
     data = {
         "game_id": 1,

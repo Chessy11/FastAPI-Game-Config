@@ -1,14 +1,16 @@
 from sqlalchemy.engine import URL
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker, declarative_base
+import os
+
 
 DATABASE_URL = URL.create(
     drivername="postgresql+asyncpg",
-    username="postgres",
-    password="potoli11",
-    host="localhost",
-    port=5432,
-    database="gamedb"
+    username=os.getenv('DB_USER', 'postgres'),
+    password=os.getenv('DB_PASSWORD', 'postgres'),
+    host=os.getenv('DB_HOST', 'localhost'),
+    port=os.getenv('DB_PORT', '5432'),
+    database=os.getenv('DB_NAME', 'gamedb')
 )
 
 

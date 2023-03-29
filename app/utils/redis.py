@@ -1,6 +1,8 @@
 import redis
+import os
 
-pool = redis.ConnectionPool(host='localhost', port=6379)
+
+pool = redis.ConnectionPool(host=os.getenv('REDIS_HOST', 'localhost'), port=os.getenv('REDIS_PORT', '6379'))
 r = redis.Redis(connection_pool=pool)
 
 

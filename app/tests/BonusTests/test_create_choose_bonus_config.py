@@ -3,6 +3,7 @@ from app.main import app
 
 client = TestClient(app)
 
+
 def test_create_choose_bonus_config():
     data = {
         "game_id": 1,
@@ -11,7 +12,7 @@ def test_create_choose_bonus_config():
         "choose_count": 3,
         "win_list": [10, 20, 30]
     }
-    
+
     response = client.post("/create-choose-bonus", json=data)
     assert response.status_code == 201
     assert response.json()["game_id"] == 1

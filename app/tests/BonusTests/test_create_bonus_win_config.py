@@ -1,8 +1,8 @@
-
 from fastapi.testclient import TestClient
 from app.main import app
 
 client = TestClient(app)
+
 
 def test_create_bonus_win_config():
     data = {
