@@ -4,7 +4,7 @@ steps:
   args:
   - 'build'
   - '-t'
-  - 'gcr.io/$PROJECT_ID/$REPO_NAME:$BRANCH_NAME-$SHORT_SHA'
+  - 'europe-central2-docker.pkg.dev/striking-arbor-382117/game-config-service:$BRANCH_NAME-$SHORT_SHA'
   - '.'
 
 # Push the image to the Container Registry
@@ -12,4 +12,4 @@ steps:
   id: Push
   args:
   - 'push'
-  - 'gcr.io/$PROJECT_ID/$REPO_NAME:$BRANCH_NAME-$SHORT_SHA'
+  - 'europe-central2-docker.pkg.dev/striking-arbor-382117/game-config-service:$BRANCH_NAME-$SHORT_SHA'
