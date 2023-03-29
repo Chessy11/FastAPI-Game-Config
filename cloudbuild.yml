@@ -2,8 +2,11 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   id: Build
   args: ['build', '-t', 'europe-central2-docker.pkg.dev/$PROJECT_ID/digital-dice/$REPO_NAME:$BRANCH_NAME-$SHORT_SHA', '.']
-images:
-- 'europe-central2-docker.pkg.dev/$PROJECT_ID/digital-dice/$REPO_NAME:$BRANCH_NAME-$SHORT_SHA'
+- name: 'gcr.io/cloud-builders/docker'
+  id: Push
+  args: ['push', 'europe-central2-docker.pkg.dev/$PROJECT_ID/digital-dice/$REPO_NAME:$BRANCH_NAME-$SHORT_SHA']
+# images:
+# - 'europe-central2-docker.pkg.dev/$PROJECT_ID/digital-dice/$REPO_NAME:$BRANCH_NAME-$SHORT_SHA'
 - name: "gcr.io/cloud-builders/gke-deploy"
   id: Deploy
   args: 
