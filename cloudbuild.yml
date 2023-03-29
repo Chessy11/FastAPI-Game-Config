@@ -1,17 +1,10 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
   id: Build
-  args:
-  - 'build'
-  - '-t'
-  - 'europe-central2-docker.pkg.dev/striking-arbor-382117/game-config-service:$BRANCH_NAME-$SHORT_SHA'
-  - '.'
-
+  args: ['build', '-t', 'europe-central2-docker.pkg.dev/striking-arbor-382117/game-config-service:$BRANCH_NAME-$SHORT_SHA', '.']
 # Push the image to the Container Registry
 - name: 'gcr.io/cloud-builders/docker'
   id: Push
-  args:
-  - 'push'
-  - 'europe-central2-docker.pkg.dev/striking-arbor-382117/game-config-service:$BRANCH_NAME-$SHORT_SHA'
+  args: ['push', 'europe-central2-docker.pkg.dev/striking-arbor-382117/game-config-service:$BRANCH_NAME-$SHORT_SHA']
 options:
   logging: CLOUD_LOGGING_ONLY
