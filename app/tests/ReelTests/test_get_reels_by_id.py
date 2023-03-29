@@ -4,7 +4,7 @@ from app.main import app
 client = TestClient(app)
 
 
-def test_publish_game():
-    response = client.get("/publish/1")
+def test_get_reel_by_id():
+    response = client.get("/reel/1")
     assert response.status_code == 200
-    assert response.json()["message"] == "Game published"
+    assert response.json()["reel_id"] == 1

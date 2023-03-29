@@ -10,7 +10,7 @@ async def get_symbols_by_game_id(session: AsyncSession, game_id: int):
         select(SymbolModel)
         .where(SymbolModel.game_id == game_id)
     )
-    return result.scalars().fetchall()
+    return result.scalars().unique().fetchall()
 
 
 async def create_symbol(session: AsyncSession, symbol: SymbolInSchema):

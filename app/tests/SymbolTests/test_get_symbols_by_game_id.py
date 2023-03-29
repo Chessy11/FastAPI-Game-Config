@@ -4,7 +4,6 @@ from app.main import app
 client = TestClient(app)
 
 
-def test_publish_game():
-    response = client.get("/publish/1")
+def test_get_symbols_by_game_id():
+    response = client.get("/symbols/1")
     assert response.status_code == 200
-    assert response.json()["message"] == "Game published"

@@ -10,7 +10,7 @@ async def get_reels_by_game_id(session: AsyncSession, game_id: int):
         select(ReelsModel)
         .where(ReelsModel.game_id == game_id)
     )
-    return result.scalars().fetchall()
+    return result.scalars().unique().fetchall()
 
 
 async def create_reel(session: AsyncSession, reel: ReelInSchema):
