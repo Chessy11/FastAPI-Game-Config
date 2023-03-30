@@ -10,7 +10,8 @@ DATABASE_URL = URL.create(
     password=os.getenv('DB_PASSWORD', 'postgres'),
     host=os.getenv('DB_HOST', 'localhost'),
     port=os.getenv('DB_PORT', '5432'),
-    database=os.getenv('DB_NAME', 'gamedb')
+    database=os.getenv('DB_NAME', 'gamedb'),
+    ssl="prefer"
 )
 
 
