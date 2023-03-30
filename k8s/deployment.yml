@@ -60,7 +60,7 @@ spec:
     spec:
       containers:
       - name: game-config-service
-        image: game-config-service:latest
+        image: europe-central2-docker.pkg.dev/striking-arbor-382117/digital-dice/game-config-service:$BRANCH_NAME-$SHORT_SHA
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
