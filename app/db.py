@@ -10,12 +10,11 @@ DATABASE_URL = URL.create(
     password=os.getenv('DB_PASSWORD', 'postgres'),
     host=os.getenv('DB_HOST', 'localhost'),
     port=os.getenv('DB_PORT', '5432'),
-    database=os.getenv('DB_NAME', 'gamedb'),
-    ssl="prefer"
+    database=os.getenv('DB_NAME', 'gamedb')
 )
 
 
-engine = create_async_engine(DATABASE_URL)
+engine = create_async_engine(DATABASE_URL, connect_args={"sslmode": "prefer"})
 SessionLocal = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
 
 Base = declarative_base()
