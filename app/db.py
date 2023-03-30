@@ -14,7 +14,7 @@ DATABASE_URL = URL.create(
 )
 
 
-engine = create_async_engine(DATABASE_URL, connect_args={"sslmode": "prefer"})
+engine = create_async_engine(DATABASE_URL, connect_args={"ssl": "prefer"})
 SessionLocal = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
 
 Base = declarative_base()
