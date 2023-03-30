@@ -7,7 +7,7 @@ steps:
   args: ['push', 'europe-central2-docker.pkg.dev/$PROJECT_ID/digital-dice/$REPO_NAME:$BRANCH_NAME-$SHORT_SHA']
 - name: 'ubuntu'
   id: Inject Envs
-  args: ['bash','-c', 'sed -i "s/\$BRANCH_NAME/${BRANCH_NAME}/g" k8s/deployment.yml && sed -i "s/\$SHORT_SHA/${SHORT_SHA}/g" k8s/deployment.yml && cp k8s/deployment.yml /workspace/deployment.yml']
+  args: ['bash','-c', 'sed -i "s/IMAGE_TAG/${BRANCH_NAME}-${SHORT_SHA}/g" k8s/deployment.yml && cp k8s/deployment.yml /workspace/deployment.yml']
 - name: "gcr.io/cloud-builders/gke-deploy"
   id: Deploy
   args: 
