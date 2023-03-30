@@ -26,15 +26,13 @@ kind: Ingress
 metadata:
   namespace: dev
   name: game-config-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$1   
 spec:
   rules:
-    - host: digitaldicegame.com
+    - host: api.dev.digitaldicegame.com
       http:
         paths:
-          - path: /game-config-service(/|$)(.*)
-            pathType: Prefix
+          - path: /game-cs/*
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: game-config-service
