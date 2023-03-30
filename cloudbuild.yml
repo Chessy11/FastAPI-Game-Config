@@ -5,7 +5,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   id: Push
   args: ['push', 'europe-central2-docker.pkg.dev/$PROJECT_ID/digital-dice/$REPO_NAME:$BRANCH_NAME-$SHORT_SHA']
-- name: 'gcr.io/cloud-builders/docker'
+- name: 'gcr.io/cloud-builders/gcloud'
   id: Inject Envs
   args: 
   - '-c'
