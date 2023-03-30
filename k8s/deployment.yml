@@ -68,13 +68,13 @@ spec:
         - name: ENVIRONMENT
           value: "dev"
         - name: DB_HOST
-          value: "kubernetes.docker.internal"
+          value: "localhost"
         - name: DB_PORT
           value: "5432"
         - name: DB_USER
           value: "postgres"
         - name: DB_PASSWORD
-          value: "postgres"
+          value: ">_+%<4p#,0bbt~@Z"
         - name: DB_NAME
           value: "gamedb"
         - name: REDIS_HOST
