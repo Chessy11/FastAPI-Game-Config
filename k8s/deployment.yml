@@ -16,8 +16,7 @@ metadata:
     cloud.google.com/neg: '{"ingress": true}'
 spec:
   selector:
-    app: game-config-service
-    tier: web
+    app: game-config-deployment
   ports:
   - protocol: TCP
     port: 80
@@ -48,7 +47,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: dev
-  name: game-config-service
+  name: game-config-deployment
   labels:
     app: game-config-service
 spec:
@@ -62,7 +61,7 @@ spec:
         app: game-config-service
     spec:
       containers:
-      - name: game-config-service
+      - name: game-config-pod
         image: europe-central2-docker.pkg.dev/striking-arbor-382117/digital-dice/game-config-service:IMAGE_TAG
         imagePullPolicy: Always
         ports:
