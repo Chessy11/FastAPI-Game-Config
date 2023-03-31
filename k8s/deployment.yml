@@ -15,11 +15,11 @@ spec:
       labels:
         app: game-config-depl
     spec:
+      imagePullSecrets:
+      - name: registry-digital-dice
       containers:
       - name: game-config-depl
         image: registry.digitalocean.com/digital-dice/game-config:e4e8b19
-      imagePullSecrets:
-      - name: registry-digital-dice
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
