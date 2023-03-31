@@ -41,6 +41,7 @@ jobs:
       - name: Push to git
         run: |
           sed -i "s| image_tag | $(echo $GITHUB_SHA | head -c7)|g" k8s/deployment.yml
+          git status
           git config --global user.email "dgokadze@gmail.com"
           git config --global user.name "GitHub Actions"
           git add k8s/deployment.yml
