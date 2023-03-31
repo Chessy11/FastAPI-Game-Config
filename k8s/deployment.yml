@@ -18,7 +18,7 @@ spec:
     tier: web
   ports:
   - protocol: TCP
-    port: 8000
+    port: 80
     targetPort: 8000
   type: NodePort
 ---
@@ -40,7 +40,7 @@ spec:
               service:
                 name: game-config-service
                 port:
-                  number: 8000
+                  number: 80
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -85,7 +85,6 @@ spec:
           value: "kubernetes.docker.internal"
         - name: REDIS_PORT
           value: "6379"
-        liveliness
         resources:
           requests:
             cpu: 100m
