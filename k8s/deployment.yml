@@ -19,7 +19,7 @@ spec:
       - name: registry-digital-dice
       containers:
       - name: game-config-depl
-        image: registry.digitalocean.com/digital-dice/game-config:image_tag
+        image: registry.digitalocean.com/digital-dice/game-config:1a31428
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
