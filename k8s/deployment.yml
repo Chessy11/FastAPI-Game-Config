@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: game-config-depl
-        image: europe-central2-docker.pkg.dev/striking-arbor-382117/digital-dice/game-config-service:IMAGE_TAG
+        image: https://registry.digitalocean.com/digital-dice/game-config:3f1d61f
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
