@@ -16,7 +16,7 @@ metadata:
     cloud.google.com/neg: '{"ingress": true}'
 spec:
   selector:
-    app: game-config-deployment
+    app: game-config-pod
   ports:
   - protocol: TCP
     port: 80
