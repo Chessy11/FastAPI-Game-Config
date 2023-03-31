@@ -34,8 +34,8 @@ spec:
     - host: api.dev.digitaldicegame.com
       http:
         paths:
-          - path: /game-cs/
-            pathType: ImplementationSpecific
+          - path: /game-cs
+            pathType: Prefix
             backend:
               service:
                 name: game-config-service
