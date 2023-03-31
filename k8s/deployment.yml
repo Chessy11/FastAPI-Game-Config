@@ -12,6 +12,8 @@ metadata:
   name: game-config-service
   labels:
     app: game-config-service
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
 spec:
   selector:
     app: game-config-service
