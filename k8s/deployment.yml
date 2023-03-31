@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: game-config-depl
-        image: https://registry.digitalocean.com/digital-dice/game-config:3f1d61f
+        image: registry.digitalocean.com/digital-dice/game-config:3f1d61f
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
