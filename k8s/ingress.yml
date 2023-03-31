@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1 
+kind: Ingress
+metadata:
+  namespace: dev
+  name: game-config-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-nginx
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+spec:
+  rules:
+    - host: api.dev.digitaldicegame.com
+      http:
+        paths:
+          - path: /game-cs
+            pathType: Prefix
+            backend:
+              service:
+                name: game-config-service
+                port:
+                  number: 80
+  tls:
+  - hosts:
+    - api.dev.digitaldicegame.com
