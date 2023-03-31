@@ -85,6 +85,14 @@ spec:
           value: "kubernetes.docker.internal"
         - name: REDIS_PORT
           value: "6379"
+        livenessProbe:
+          httpGet:
+           path: /health
+           port: 8000
+          initialDelaySeconds: 5
+          timeoutSeconds: 2
+          periodSeconds: 10
+          failureThreshold: 3
         resources:
           requests:
             cpu: 100m
