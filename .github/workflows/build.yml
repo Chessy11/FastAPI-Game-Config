@@ -34,7 +34,10 @@ jobs:
         run: docker push $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7)
 
       - name: change deployment.yml
-        run: sed -i "s|$(echo $REGISTRY)/$(echo $IMAGE_NAME):*|$(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7)|g" k8s/deployment.yml
+        run: | 
+          sed -i "s| image_tag | $(echo $GITHUB_SHA | head -c7) |g" trash/deployment.yml
+          rm -rf k8s/deployment.yml
+          mv trash/deployment.yml k8s/deployment.yml
 
       - name: push to git
         run: |
