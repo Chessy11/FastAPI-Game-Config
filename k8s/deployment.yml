@@ -19,7 +19,7 @@ spec:
       - name: registry-digital-dice
       containers:
       - name: game-config-depl
-        image: registry.digitalocean.com/digital-dice/game-config:e4e8b19
+        image: registry.digitalocean.com/digital-dice/game-config:image_tag
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
@@ -27,18 +27,27 @@ spec:
         - name: ENVIRONMENT
           value: "dev"
         - name: DB_HOST
-          value: "postgresql-postgresql-ha-pgpool"
+          valueFrom:
+            secretKeyRef:
+              name: db-password
+              key: host
         - name: DB_PORT
           value: "5432"
         - name: DB_USER
-          value: "postgres"
+          valueFrom:
+            secretKeyRef:
+              name: db-password
+              key: username
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: postgresql-postgresql-ha-postgresql
+              name: db-password
               key: password
         - name: DB_NAME
-          value: gamedb
+          valueFrom:
+            secretKeyRef:
+              name: db-password
+              key: database
         - name: REDIS_HOST
           value: "kubernetes.docker.internal"
         - name: REDIS_PORT
