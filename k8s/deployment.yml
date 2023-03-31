@@ -27,10 +27,7 @@ spec:
         - name: ENVIRONMENT
           value: "dev"
         - name: DB_HOST
-          valueFrom:
-            secretKeyRef:
-              name: db-password
-              key: host
+          value: "private-dev-db-all-services-do-user-6051737-0.b.db.ondigitalocean.com"
         - name: DB_PORT
           value: "5432"
         - name: DB_USER
