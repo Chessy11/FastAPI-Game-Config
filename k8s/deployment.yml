@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: game-config-depl
-        image: registry.digitalocean.com/digital-dice/game-config:3f1d61f
+        image: registry.digitalocean.com/digital-dice/game-config:9628cd5
         imagePullSecrets:
         - name: registry-digital-dice
         imagePullPolicy: Always
