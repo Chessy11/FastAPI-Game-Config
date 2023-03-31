@@ -15,17 +15,20 @@ metadata:
 spec:
   selector:
     app: game-config-service
+    tier: web
   ports:
   - protocol: TCP
     port: 8000
     targetPort: 8000
-  type: ClusterIP
+  type: NodePort
 ---
 apiVersion: networking.k8s.io/v1 
 kind: Ingress
 metadata:
   namespace: dev
   name: game-config-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: dev-digital-dice
 spec:
   rules:
     - host: api.dev.digitaldicegame.com
