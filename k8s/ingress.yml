@@ -22,4 +22,3 @@ spec:
   tls:
   - hosts:
     - api.dev.digitaldicegame.com
-  secretName: letsencrypt-nginx-private-key
