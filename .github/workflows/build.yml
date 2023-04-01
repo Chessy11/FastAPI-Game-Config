@@ -33,19 +33,19 @@ jobs:
       - name: Push image to DigitalOcean Container Registry
         run: docker push $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7)
 
-      - name: change deployment.yml
-        run: sed -i "s| image_tag | $(echo $GITHUB_SHA | head -c7) |g" trash/deployment.yml
+      - name: kustomize download
+        run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
 
-      - name: delete deployment.yml
-        run: rm -rf k8s/deployment.yml
+      - name: kustomize apply new image tag
+        run: cd k8s && kustomize edit set image $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7)
 
-      - name: move deployment.yml    
-        run: mv trash/deployment.yml k8s/deployment.yml
+      - name: remove kusstomize file
+        run: rm -rf kustomize
 
       - name: push to git
         run: |
           git config --global user.email "dgokadze@gmail.com"
           git config --global user.name "GitHub Actions"
-          git add k8s/deployment.yml
-          git commit -m "Update deployment.yml"
+          git add k8s/kustomization.yaml
+          git commit -m "Update kustomize file"
           git push
