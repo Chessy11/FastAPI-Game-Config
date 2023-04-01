@@ -4,7 +4,7 @@ from app.db import engine
 from app.routers import GameRoute, SymbolRoute, FreeSpinBonusRoute, ReelRoute, ChooseBonusRoute
 from app.models import Models
 
-app = FastAPI()
+app = FastAPI(root_path="/game-cs")
 
 app.include_router(GameRoute.router)
 app.include_router(SymbolRoute.router)
