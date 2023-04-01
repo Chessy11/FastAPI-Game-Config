@@ -16,7 +16,6 @@ async def get_games(session: AsyncSession, skip: int = 0, limit: int = 20):
     return result.scalars().unique().fetchall()
 
 
-
 async def create_game(session: AsyncSession, game: GameInSchema):
     new_game = GameModel(**game.dict())
     session.add(new_game)

@@ -93,3 +93,13 @@ class PaytableModel(Base):
     s_payout = Column(Integer, nullable=False)
 
     owner = relationship("SymbolModel", back_populates="paytables")
+
+
+class UserModel(Base):
+    __tablename__ = "users"
+    user_id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, nullable=False, unique=True)
+    password = Column(String, nullable=False)
+    is_admin = Column(Boolean, nullable=False, default=False)
+    is_active = Column(Boolean, nullable=False, default=True)
+
