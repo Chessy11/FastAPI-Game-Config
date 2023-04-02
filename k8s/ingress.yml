@@ -4,10 +4,9 @@ metadata:
   namespace: dev
   name: game-config-ingress
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-nginx
     kubernetes.io/ingress.class: nginx
-    kubernetes.io/tls-acme: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/whitelist-source-range: 95.104.120.225/32
 spec:
   rules:
     - host: api.dev.digitaldicegame.com
@@ -20,6 +19,3 @@ spec:
                 name: game-config-service
                 port:
                   number: 80
-  tls:
-  - hosts:
-    - api.dev.digitaldicegame.com
