@@ -1,7 +1,7 @@
 name: Build and push Docker image
 on:
   push:
-    branches: [ master ]
+    branches: [ dev, staging, prod ]
     paths-ignore:
       - 'k8s/**'
   workflow_dispatch:
