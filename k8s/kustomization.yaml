@@ -9,4 +9,4 @@ resources:
 
 images:
 - name: registry.digitalocean.com/digital-dice/game-config
-  newTag: f812f9a
+  newTag: 3ab2ec1
