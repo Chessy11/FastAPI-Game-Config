@@ -1,4 +1,4 @@
-from pydantic import BaseModel, HttpUrl
+from pydantic import BaseModel
 
 from app.schemas.ChooseBonusSchema import ChooseBonusOutSchema
 from app.schemas.FreeSpinBonusSchema import FreeSpinBonusOutSchema
@@ -10,7 +10,7 @@ class GameInSchema(BaseModel):
     game_name: str
     game_desc: str
     game_type: str
-    banner_img: HttpUrl
+    banner_img: str
     game_rtp: float
 
 
