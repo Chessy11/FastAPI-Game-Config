@@ -19,7 +19,7 @@ class GameOutSchema(BaseModel):
     game_name: str
     game_desc: str
     game_type: str
-    banner_img: HttpUrl
+    banner_img: str
     game_rtp: float
     isPublished: bool
     symbols: list[SymbolOutSchema]
