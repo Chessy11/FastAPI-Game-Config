@@ -1,11 +1,21 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.db import engine
 from app.routers import GameRoute, SymbolRoute, FreeSpinBonusRoute, ReelRoute, ChooseBonusRoute, UserRoute
 from app.models import Models
-# test comment
 
 app = FastAPI(root_path="/game-cs")
+
+origins = ['*']
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(GameRoute.router)
 app.include_router(SymbolRoute.router)
