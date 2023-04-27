@@ -23,8 +23,7 @@ class FreeSpinBonusInSchema(BaseModel):
 
 
 class FreeSpinBonusOutSchema(BaseModel):
-    bonus_id: int
-    game_id: int
+    fs_bonus_id: int
     symbol_id: int
     bonus_type: int
     bonus_wins: list['BonusWinOutSchema']

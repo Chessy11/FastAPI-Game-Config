@@ -1,9 +1,12 @@
 from pydantic import BaseModel, HttpUrl
+from typing import Any, List
+from pydantic import Field
 
 from app.schemas.ChooseBonusSchema import ChooseBonusOutSchema
 from app.schemas.FreeSpinBonusSchema import FreeSpinBonusOutSchema
 from app.schemas.SymbolSchema import SymbolOutSchema
 from app.schemas.ReelSchema import ReelOutSchema
+from app.schemas.LineSchema import LineOutSchema
 
 
 class GameInSchema(BaseModel):
@@ -26,6 +29,7 @@ class GameOutSchema(BaseModel):
     free_spin_bonuses: list[FreeSpinBonusOutSchema]
     choose_bonuses: list[ChooseBonusOutSchema]
     reels: list[ReelOutSchema]
+    lines: list[LineOutSchema]
 
     class Config:
         orm_mode = True

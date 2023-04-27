@@ -19,6 +19,7 @@ class GameModel(Base):
     free_spin_bonuses = relationship("FreeSpinBonusModel", back_populates="owner", lazy="joined")
     choose_bonuses = relationship("ChooseBonusModel", back_populates="owner", lazy="joined")
     reels = relationship("ReelsModel", back_populates="owner", lazy="joined")
+    lines = relationship("LinesModel", back_populates="owner", lazy="joined")
 
 
 class SymbolModel(Base):
@@ -102,4 +103,14 @@ class UserModel(Base):
     password = Column(String, nullable=False)
     is_admin = Column(Boolean, nullable=False, default=False)
     is_active = Column(Boolean, nullable=False, default=True)
+
+
+class LinesModel(Base):
+    __tablename__ = "lines"
+    line_id = Column(Integer, primary_key=True, nullable=False, index=True)
+    symbol_positions = Column(ARRAY(Integer), nullable=False)
+    line_number = Column(Integer, nullable=False)
+    game_id = Column(Integer, ForeignKey("games.game_id"))
+
+    owner = relationship("GameModel", back_populates="lines")
 

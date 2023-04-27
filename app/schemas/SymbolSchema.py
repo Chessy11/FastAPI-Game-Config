@@ -25,7 +25,6 @@ class SymbolInSchema(BaseModel):
 
 class SymbolOutSchema(BaseModel):
     symbol_id: int
-    game_id: int
     symbol_name: str
     symbol_type: int
     paytables: list['PaytableOutSchema']

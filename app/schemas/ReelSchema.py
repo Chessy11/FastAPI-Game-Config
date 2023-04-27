@@ -23,7 +23,6 @@ class ReelSymbolOutSchema(BaseModel):
 
 class ReelOutSchema(BaseModel):
     reel_id: int
-    game_id: int
     position: int
     symbols: list[ReelSymbolOutSchema]
 

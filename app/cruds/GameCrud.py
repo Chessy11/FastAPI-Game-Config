@@ -25,7 +25,15 @@ async def create_game(session: AsyncSession, game: GameInSchema):
 
 
 async def get_game_by_id(game_id: int, session: AsyncSession):
-    return await session.get(GameModel, game_id, options=[selectinload(GameModel.symbols)])
+    return await session.get(
+        GameModel,
+        game_id,
+        options=[
+            selectinload(GameModel.symbols),
+            selectinload(GameModel.lines),
+            selectinload(GameModel.free_spin_bonuses),
+        ],
+    )
 
 
 async def publish_game(game_id: int, session: AsyncSession):
