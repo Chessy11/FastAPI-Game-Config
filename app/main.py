@@ -5,12 +5,8 @@ from app.db import engine
 from app.routers import GameRoute, SymbolRoute, FreeSpinBonusRoute, ReelRoute, ChooseBonusRoute, UserRoute, LineRoute
 from app.models import Models
 
-<<<<<<< HEAD
 
-app = FastAPI()
-=======
 app = FastAPI(root_path="/game-cs")
->>>>>>> b332936cb1e1196cf204e4b3a58d81d893f179ff
 
 origins = ['*']
 
