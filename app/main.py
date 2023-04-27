@@ -5,7 +5,6 @@ from app.db import engine
 from app.routers import GameRoute, SymbolRoute, FreeSpinBonusRoute, ReelRoute, ChooseBonusRoute, UserRoute, LineRoute
 from app.models import Models
 
-
 app = FastAPI(root_path="/game-cs")
 
 origins = ['*']
@@ -25,7 +24,6 @@ app.include_router(ChooseBonusRoute.router)
 app.include_router(ReelRoute.router)
 app.include_router(UserRoute.router)
 app.include_router(LineRoute.router)
-
 
 
 @app.on_event("startup")
