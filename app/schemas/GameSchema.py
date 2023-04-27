@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 from pydantic import BaseModel, HttpUrl
 from typing import Any, List
 from pydantic import Field
+=======
+from pydantic import BaseModel
+>>>>>>> b332936cb1e1196cf204e4b3a58d81d893f179ff
 
 from app.schemas.ChooseBonusSchema import ChooseBonusOutSchema
 from app.schemas.FreeSpinBonusSchema import FreeSpinBonusOutSchema
@@ -13,7 +17,7 @@ class GameInSchema(BaseModel):
     game_name: str
     game_desc: str
     game_type: str
-    banner_img: HttpUrl
+    banner_img: str
     game_rtp: float
 
 
@@ -22,7 +26,7 @@ class GameOutSchema(BaseModel):
     game_name: str
     game_desc: str
     game_type: str
-    banner_img: HttpUrl
+    banner_img: str
     game_rtp: float
     isPublished: bool
     symbols: list[SymbolOutSchema]

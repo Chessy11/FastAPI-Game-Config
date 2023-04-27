@@ -26,7 +26,7 @@ async def get_symbols_by_game_id(game_id: int, session: AsyncSession = Depends(g
 
 @router.get("/symbol/{symbol_id}", tags=["symbol"], status_code=200)
 async def get_symbol_by_id(symbol_id: int, session: AsyncSession = Depends(get_session)):
-    symbol = await SymbolCrud.get_symbol_by_id(symbol_id, session)
+    symbol = await SymbolCrud.get_symbol_by_id(session, symbol_id)
     if symbol is None:
         raise HTTPException(status_code=404, detail="Symbol not found")
     return symbol
