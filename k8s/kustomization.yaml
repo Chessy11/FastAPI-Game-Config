@@ -9,4 +9,4 @@ resources:
 
 images:
 - name: registry.digitalocean.com/digital-dice/game-config
-  newTag: ff87cc7
+  newTag: 5de4028
