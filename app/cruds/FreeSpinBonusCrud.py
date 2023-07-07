@@ -21,8 +21,6 @@ async def get_bonuses_by_game_id(session: AsyncSession, game_id: int):
     return result.scalars().unique().fetchall()
 
 
-
-
 async def get_bonus_by_id(bonus_id: int, session: AsyncSession):
     return await session.get(FreeSpinBonusModel, bonus_id)
 

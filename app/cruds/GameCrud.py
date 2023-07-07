@@ -32,6 +32,8 @@ async def get_game_by_id(game_id: int, session: AsyncSession):
             selectinload(GameModel.symbols),
             selectinload(GameModel.lines),
             selectinload(GameModel.free_spin_bonuses),
+            selectinload(GameModel.choose_bonuses),
+
         ],
     )
 

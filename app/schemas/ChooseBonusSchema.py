@@ -10,7 +10,7 @@ class ChooseBonusInSchema(BaseModel):
 
 
 class ChooseBonusOutSchema(BaseModel):
-    bonus_id: int
+    c_bonus_id: int
     game_id: int
     symbol_id: int
     bonus_type: int

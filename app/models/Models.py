@@ -14,7 +14,6 @@ class GameModel(Base):
     banner_img = Column(String, nullable=False)
     game_rtp = Column(Float, nullable=False)
     isPublished = Column(Boolean, nullable=False, default=False)
-
     symbols = relationship("SymbolModel", back_populates="owner")
     free_spin_bonuses = relationship("FreeSpinBonusModel", back_populates="owner", lazy="joined")
     choose_bonuses = relationship("ChooseBonusModel", back_populates="owner", lazy="joined")

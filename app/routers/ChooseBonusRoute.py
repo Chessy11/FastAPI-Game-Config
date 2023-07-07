@@ -19,3 +19,9 @@ async def create_choose_bonus_config(create_choose_bonus: ChooseBonusSchema.Choo
     return new_choose_bonus
 
 
+@router.get("/choose-bonus/{c_bonus_id}", tags=["choose bonus"], status_code=200)
+async def get_choose_bonus_by_id(c_bonus_id: int, session: AsyncSession = Depends(get_session)):
+    bonus = await ChooseBonusCrud.get_choose_bonus_by_id(c_bonus_id, session)
+    if bonus is None:
+        raise HTTPException(status_code=404, detail="Choose bonus not found")
+    return bonus

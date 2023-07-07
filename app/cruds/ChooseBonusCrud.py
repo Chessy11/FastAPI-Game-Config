@@ -12,3 +12,6 @@ async def create_choose_bonus(session: AsyncSession, bonus: ChooseBonusSchema.Ch
     return bonus_model
 
 
+
+async def get_choose_bonus_by_id(session: AsyncSession, c_bonus_id: int):
+    return await session.get(ChooseBonusModel, c_bonus_id)
