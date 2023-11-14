@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
-
+import logging
 from app.db import get_session
 from app.schemas.LineSchema import LineInSchema
 from app.cruds import LinesCrud
@@ -32,3 +32,18 @@ async def get_line_by_id(line_id: int, session: AsyncSession = Depends(get_sessi
     if line is None:
         raise HTTPException(status_code=404, detail="Line not found")
     return line
+
+
+logger = logging.getLogger(__name__)
+
+
+@router.delete("/delete_line/{line_id}", status_code=200)
+async def delete_line_by_id(line_id: int, session: AsyncSession = Depends(get_session)):
+    try:
+        deleted_count = await LinesCrud.delete_line_by_id(session, line_id)
+        if deleted_count == 0:
+            raise HTTPException(status_code=404, detail="Line not found")
+        return {"deleted_count": deleted_count}
+    except Exception as e:
+        logger.error(f"Unexpected error deleting line: {e}")
+        raise HTTPException(status_code=500, detail="Unexpected error deleting line")

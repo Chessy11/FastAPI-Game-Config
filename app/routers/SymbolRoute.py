@@ -40,8 +40,18 @@ async def create_paytable_config(create_paytable: PaytableInSchema, session: Asy
         raise HTTPException(status_code=400, detail=str(ie.orig))
     return new_paytable
 
+@router.delete("/symbols/{symbol_id}", tags=["symbol"], status_code=200)
+async def delete_symbol_by_id(symbol_id: int, session: AsyncSession = Depends(get_session)):
+    # delete symbol from database
+    await SymbolCrud.delete_symbol(session, symbol_id)
+    return {"message": f"Symbol with id {symbol_id} deleted successfully"}
 
 @router.get("/paytables/{symbol_id}", tags=["symbol"], status_code=200)
 async def paytables_by_symbol_id(symbol_id: int, session: AsyncSession = Depends(get_session)):
     paytables = await SymbolCrud.get_paytables_by_symbol_id(session, symbol_id)
     return paytables
+
+
+
+
+    

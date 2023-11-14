@@ -1,6 +1,6 @@
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-
+from sqlalchemy import delete
 from app.models.Models import LinesModel
 from app.schemas.LineSchema import LineInSchema
 
@@ -25,3 +25,12 @@ async def get_lines_by_game_id(session: AsyncSession, game_id: int):
     return result.scalars().unique().fetchall()
 
 
+async def delete_line_by_id(session: AsyncSession, line_id: int) -> int:
+    result = await session.execute(
+        delete(LinesModel).where(LinesModel.line_id == line_id)
+        
+    )
+    print(f"Attempting to delete line with ID: {line_id}")
+    await session.commit()
+    print(f"Deleted rows: {result.rowcount}")
+    return result.rowcount
