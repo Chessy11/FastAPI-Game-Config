@@ -14,3 +14,4 @@ DATABASE_URL = URL.create(
 ```bash 
 docker build -t game-config-service .
 ``` 
+# Go-Slot-Config
