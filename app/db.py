@@ -12,6 +12,9 @@ DATABASE_URL = URL.create(
     database=os.getenv('DB_NAME', 'gamedb'),
 )
 
+# DATABASE_URL = "postgresql+asyncpg://postgres:potoli11@localhost:5432/gamedb"
+
+
 engine = create_async_engine(str(DATABASE_URL), connect_args={"ssl": None})
 
 SessionLocal = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
