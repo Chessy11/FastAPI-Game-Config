@@ -1,12 +1,14 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from typing import Optional
 
 
 class UserInSchema(BaseModel):
     username: str
+    email: EmailStr
     password: str
     is_active: Optional[bool] = True
     is_superuser: Optional[bool] = False
+    is_admin: Optional[bool] = False
 
 
 class UserOutSchema(BaseModel):
@@ -14,6 +16,7 @@ class UserOutSchema(BaseModel):
     username: str
     is_active: bool
     is_superuser: bool
+    is_admin: bool
 
     class Config:
         orm_mode = True

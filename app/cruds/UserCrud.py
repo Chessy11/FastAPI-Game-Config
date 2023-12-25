@@ -9,7 +9,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 async def create_user(session: AsyncSession, user: UserInSchema):
-    new_user = UserModel(username=user.username, password=pwd_context.hash(user.password))
+    new_user = UserModel(username=user.username, email=user.email, password=pwd_context.hash(user.password), is_active=user.is_active, is_admin=user.is_admin)
     session.add(new_user)
     await session.commit()
     await session.refresh(new_user)
@@ -22,5 +22,11 @@ async def get_user_by_id(user_id: int, session: AsyncSession):
 
 async def get_user_by_username(username: str, session: AsyncSession):
     statement = select(UserModel).where(UserModel.username == username)
+    result = await session.execute(statement)
+    return result.scalars().one_or_none()
+
+
+async def get_user_by_email(email: str, session: AsyncSession):
+    statement = select(UserModel).where(UserModel.email == email)
     result = await session.execute(statement)
     return result.scalars().one_or_none()

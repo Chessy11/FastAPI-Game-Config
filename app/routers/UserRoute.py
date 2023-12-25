@@ -17,10 +17,13 @@ router = APIRouter()
 @router.post("/create-user", tags=["user"], status_code=201)
 async def create_user(user: UserInSchema, session: AsyncSession = Depends(get_session)):
     try:
+        existing_user = await UserCrud.get_user_by_email(user.email, session)
+        if existing_user:
+            raise HTTPException(status_code=400, detail="Email Already Exists")
         new_user = await UserCrud.create_user(session, user)
     except IntegrityError as ie:
         raise HTTPException(status_code=400, detail=str(ie.orig))
-    return {"detail": "user created", "username": new_user.username}
+    return {"detail": "user created", "username": new_user.username, "email": new_user.email}
 
 
 @router.get("/user/{user_id}", tags=["user"], status_code=200)
@@ -45,3 +48,5 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
 @router.get("/userss/me/", tags=["user"], status_code=200)
 async def read_users_me(current_user: UserOutSchema = Depends(get_current_active_user)):
     return current_user
+
+

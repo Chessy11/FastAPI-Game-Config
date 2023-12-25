@@ -7,16 +7,19 @@ from app.db import Base
 
 class GameModel(Base):
     __tablename__ = "games"
-    game_id = Column(Integer, primary_key=True, index=True)
+    game_id   = Column(Integer, primary_key=True, index=True)
+    user_id   = Column(Integer,  ForeignKey('users.user_id'))
     game_name = Column(String, nullable=False)
     game_desc = Column(String[255], nullable=False)
     game_type = Column(String, nullable=False)
     banner_img = Column(String, nullable=False)
-    game_rtp = Column(Float, nullable=False)
+    game_rtp  = Column(Float, nullable=False)
     isPublished = Column(Boolean, nullable=False, default=False)
-    symbols = relationship("SymbolModel", back_populates="owner")
+    is_setup_complete = Column(Boolean, default=False, nullable =False)
+    symbols = relationship("SymbolModel", back_populates="owner", cascade="all, delete")
     free_spin_bonuses = relationship("FreeSpinBonusModel", back_populates="owner", lazy="joined")
     choose_bonuses = relationship("ChooseBonusModel", back_populates="owner", lazy="joined")
+    user  = relationship('UserModel', back_populates='games')
     reels = relationship("ReelsModel", back_populates="owner", lazy="joined")
     lines = relationship("LinesModel", back_populates="owner", lazy="joined")
 
@@ -95,21 +98,22 @@ class PaytableModel(Base):
     owner = relationship("SymbolModel", back_populates="paytables")
 
 
-class UserModel(Base):
-    __tablename__ = "users"
-    user_id = Column(Integer, primary_key=True, index=True)
-    username = Column(String, nullable=False, unique=True)
-    password = Column(String, nullable=False)
-    is_admin = Column(Boolean, nullable=False, default=False)
-    is_active = Column(Boolean, nullable=False, default=True)
-
-
 class LinesModel(Base):
     __tablename__ = "lines"
     line_id = Column(Integer, primary_key=True, nullable=False, index=True)
     symbol_positions = Column(ARRAY(Integer), nullable=False)
     line_number = Column(Integer, nullable=False)
-    game_id = Column(Integer, ForeignKey("games.game_id"))
-
+    game_id = Column(Integer, ForeignKey("games.game_id", ondelete="CASCADE"), nullable=False)
     owner = relationship("GameModel", back_populates="lines")
+
+
+class UserModel(Base):
+    __tablename__ = "users"
+    user_id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, nullable=False, unique=True)
+    username = Column(String, nullable=False, unique=True)
+    password = Column(String, nullable=False)
+    is_admin = Column(Boolean, nullable=False, default=False)
+    is_active = Column(Boolean, nullable=False, default=True)
+    games = relationship('GameModel', back_populates='user')
 
