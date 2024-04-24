@@ -1,7 +1,7 @@
 from sqlalchemy import select, delete 
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.models.Models import SymbolModel, PaytableModel, GameModel
-from app.schemas.SymbolSchema import SymbolInSchema, PaytableInSchema
+from app.models.models import SymbolModel, PaytableModel, GameModel
+from app.schemas.symbol_schema import SymbolInSchema, PaytableInSchema
 from sqlalchemy.orm import selectinload
 from fastapi import HTTPException
 
@@ -19,18 +19,25 @@ async def get_symbols_by_game_id(session: AsyncSession, game_id: int, user_id: i
 
 
 async def create_symbol(session: AsyncSession, symbol: SymbolInSchema, user_id: int):
-    
     game_id = symbol.game_id
     game = await session.get(GameModel, game_id)
     
     if not game or game.user_id != user_id:
-        raise HTTPException(status_code=404, detail="Game does not exists or owned by the different user")
+        raise HTTPException(status_code=404, detail="Game does not exist or is owned by a different user")
     
-    new_symbol = SymbolModel(**symbol.dict())
+    new_symbol = SymbolModel(
+        game_id=symbol.game_id,
+        symbol_name=symbol.symbol_name,
+        symbol_type=symbol.symbol_type,
+        image_url=symbol.image_url,
+        animation_url=symbol.animation_url,
+        frame_count=symbol.frame_count
+    )
     session.add(new_symbol)
     await session.commit()
     await session.refresh(new_symbol)
     return new_symbol
+
 
 #  create get symbol by id with user id
 async def get_symbol_by_id(session: AsyncSession, symbol_id: int, user_id: int):

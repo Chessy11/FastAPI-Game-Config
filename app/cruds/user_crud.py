@@ -2,8 +2,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from passlib.context import CryptContext
 from sqlalchemy.future import select
 
-from app.models.Models import UserModel
-from app.schemas.UserSchema import UserInSchema
+from app.models.models import UserModel
+from app.schemas.user_schema import UserInSchema
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 

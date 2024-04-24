@@ -5,15 +5,15 @@ from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.db import get_session
-from app.schemas.UserSchema import TokenData, UserLoginSchema, UserOutSchema
-from app.cruds.UserCrud import get_user_by_username
-from app.cruds import UserCrud
+from app.schemas.user_schema import TokenData, UserLoginSchema, UserOutSchema
+from app.cruds.user_crud import get_user_by_username
+from app.cruds import user_crud
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+ACCESS_TOKEN_EXPIRE_MINUTES = 120
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
@@ -23,7 +23,7 @@ async def verify_password(plain_password, hashed_password):
 
 
 async def login_user(email: str, password: str, session):
-    db_user = await UserCrud.get_user_by_email(email, session)
+    db_user = await user_crud.get_user_by_email(email, session)
     if db_user is None:
         return False
     if not await verify_password(password, db_user.password):

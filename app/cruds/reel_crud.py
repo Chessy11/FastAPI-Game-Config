@@ -1,7 +1,7 @@
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.models.Models import ReelsModel, ReelSymbolsModel, GameModel
-from app.schemas.ReelSchema import ReelInSchema, ReelSymbolInSchema
+from app.models.models import ReelsModel, ReelSymbolsModel, GameModel
+from app.schemas.reel_schema import ReelInSchema, ReelSymbolInSchema
 from fastapi import HTTPException
 
 async def get_reels_by_game_id(session: AsyncSession, game_id: int, user_id: int):

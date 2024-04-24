@@ -1,17 +1,17 @@
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
-from app.models.Models import FreeSpinBonusModel, FreeSpinBonusWinModel, GameModel, ChooseBonusModel
-from app.schemas import FreeSpinBonusSchema
+from app.models.models import FreeSpinBonusModel, FreeSpinBonusWinModel, GameModel, ChooseBonusModel
+from app.schemas import free_spins_bonus_schema
 from fastapi import HTTPException
 from sqlalchemy.exc import NoResultFound,  MultipleResultsFound
 from sqlalchemy.orm import selectinload
-from app.schemas.FreeSpinBonusSchema import BonusWinOutSchema 
+from app.schemas.free_spins_bonus_schema import BonusWinOutSchema 
 
 
 
 
-async def create_bonus(session: AsyncSession, bonus: FreeSpinBonusSchema.FreeSpinBonusInSchema, user_id: int):
+async def create_bonus(session: AsyncSession, bonus: free_spins_bonus_schema.FreeSpinBonusInSchema, user_id: int):
     
     game = await session.get(GameModel, bonus.game_id)
     if game is None or game.user_id != user_id:
@@ -64,7 +64,7 @@ async def get_bonus_by_id(bonus_id: int, user_id: int, session: AsyncSession):
 
 
 
-async def create_bonus_win(session: AsyncSession, bonus_win: FreeSpinBonusSchema.BonusWinInSchema, user_id: int):
+async def create_bonus_win(session: AsyncSession, bonus_win: free_spins_bonus_schema.BonusWinInSchema, user_id: int):
     # Define the query with eager loading of the owner relationship
     stmt = select(FreeSpinBonusModel).options(selectinload(FreeSpinBonusModel.owner)).where(FreeSpinBonusModel.fs_bonus_id == bonus_win.fs_bonus_id)
 

@@ -1,11 +1,11 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import HTTPException
-from app.models.Models import ChooseBonusModel, GameModel
-from app.schemas import ChooseBonusSchema
+from app.models.models import ChooseBonusModel, GameModel
+from app.schemas import choos_bonus_schema
 from sqlalchemy import select
 
 
-async def create_choose_bonus(session: AsyncSession, bonus: ChooseBonusSchema.ChooseBonusInSchema, user_id: int):
+async def create_choose_bonus(session: AsyncSession, bonus: choos_bonus_schema.ChooseBonusInSchema, user_id: int):
     # Verify if the user owns the game associated with the bonus
     game = await session.get(GameModel, bonus.game_id)
     if game is None or game.user_id != user_id:

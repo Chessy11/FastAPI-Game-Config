@@ -1,13 +1,13 @@
 import logging
 from datetime import timedelta
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends 
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db import get_session
-from app.schemas.UserSchema import UserInSchema, Token, UserOutSchema
-from app.cruds import UserCrud
+from app.schemas.user_schema import UserInSchema, Token, UserOutSchema
+from app.cruds import user_crud
 from app.utils.auth import login_user, verify_password, ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token, \
     get_current_active_user
 
@@ -17,10 +17,10 @@ router = APIRouter()
 @router.post("/create-user", tags=["user"], status_code=201)
 async def create_user(user: UserInSchema, session: AsyncSession = Depends(get_session)):
     try:
-        existing_user = await UserCrud.get_user_by_email(user.email, session)
+        existing_user = await user_crud.get_user_by_email(user.email, session)
         if existing_user:
             raise HTTPException(status_code=400, detail="Email Already Exists")
-        new_user = await UserCrud.create_user(session, user)
+        new_user = await user_crud.create_user(session, user)
     except IntegrityError as ie:
         raise HTTPException(status_code=400, detail=str(ie.orig))
     return {"detail": "user created", "username": new_user.username, "email": new_user.email}
@@ -28,7 +28,7 @@ async def create_user(user: UserInSchema, session: AsyncSession = Depends(get_se
 
 @router.get("/user/{user_id}", tags=["user"], status_code=200)
 async def get_user_by_id(user_id: int, session: AsyncSession = Depends(get_session)):
-    user = await UserCrud.get_user_by_id(user_id, session)
+    user = await user_crud.get_user_by_id(user_id, session)
     if user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return user

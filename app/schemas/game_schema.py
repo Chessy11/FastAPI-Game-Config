@@ -1,10 +1,10 @@
 from pydantic import BaseModel
 
-from app.schemas.ChooseBonusSchema import ChooseBonusOutSchema
-from app.schemas.FreeSpinBonusSchema import FreeSpinBonusOutSchema
-from app.schemas.SymbolSchema import SymbolOutSchema
-from app.schemas.ReelSchema import ReelOutSchema
-from app.schemas.LineSchema import LineOutSchema
+from app.schemas.choos_bonus_schema import ChooseBonusOutSchema
+from app.schemas.free_spins_bonus_schema import FreeSpinBonusOutSchema
+from app.schemas.symbol_schema import SymbolOutSchema
+from app.schemas.reel_schema import ReelOutSchema
+from app.schemas.line_schema import LineOutSchema
 
 
 class GameInSchema(BaseModel):

@@ -4,9 +4,9 @@ from fastapi.encoders import jsonable_encoder
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.db import get_session
-from app.schemas.GameSchema import GameInSchema, GameOutSchema
-from app.schemas.UserSchema import UserOutSchema
-from app.cruds import GameCrud
+from app.schemas.game_schema import GameInSchema, GameOutSchema
+from app.schemas.user_schema import UserOutSchema
+from app.cruds import game_crud
 from app.utils import redis
 from app.utils.auth import get_current_active_user
 import json
@@ -19,7 +19,7 @@ async def create_game_config(create_game: GameInSchema,
                              current_user: UserOutSchema = Depends(get_current_active_user),
                              session: AsyncSession = Depends(get_session)):
     try:
-        new_game = await GameCrud.create_game(session, create_game, current_user.user_id)
+        new_game = await game_crud.create_game(session, create_game, current_user.user_id)
     except IntegrityError as ie:
         raise HTTPException(status_code=400, detail=str(ie.orig))
     return new_game
@@ -29,14 +29,14 @@ async def create_game_config(create_game: GameInSchema,
 async def get_games(skip: int = 0, limit: int = 20, 
                     current_user: UserOutSchema = Depends(get_current_active_user),
                     session: AsyncSession = Depends(get_session)):
-    games = await GameCrud.get_games(session, current_user.user_id, skip, limit)
+    games = await game_crud.get_games(session, current_user.user_id, skip, limit)
     return games
 
 
 @router.get("/game/{game_id}", tags=["game"], status_code=200, response_model=GameOutSchema)
 async def get_game_by_id(game_id: int, current_user: UserOutSchema = Depends(get_current_active_user), session: AsyncSession = Depends(get_session)):
     print(f"Handler start: Fetching game by ID {game_id} for user {current_user.user_id}")  # Debug log
-    game = await GameCrud.get_game_by_id(game_id, current_user.user_id, session)
+    game = await game_crud.get_game_by_id(game_id, current_user.user_id, session)
     if game is None:
         print(f"Handler error: Game ID {game_id} not found for user {current_user.user_id}")  # Debug log
         raise HTTPException(status_code=404, detail="Game not found")
@@ -49,12 +49,12 @@ async def publish_game_endpoint(game_id: int,
                                 current_user: UserOutSchema = Depends(get_current_active_user),
                                 session: AsyncSession = Depends(get_session)):
     # Fetch the game first
-    game = await GameCrud.get_game_by_id(game_id, current_user.user_id, session)  # Pass user_id and session
+    game = await game_crud.get_game_by_id(game_id, current_user.user_id, session)  # Pass user_id and session
     if game is None:
         raise HTTPException(status_code=404, detail="Game not found")
 
     # Update and save the game as published
-    game = await GameCrud.publish_game(game_id, session)  # This call is fine as is
+    game = await game_crud.publish_game(game_id, session)  # This call is fine as is
 
     # Convert game object to JSON
     game_json = jsonable_encoder(game)
@@ -90,7 +90,7 @@ async def get_redis_game_data(game_id: int, current_user: UserOutSchema = Depend
 async def delete_game(game_id: int, 
                       current_user: UserOutSchema = Depends(get_current_active_user),
                       session: AsyncSession = Depends(get_session)):
-    game_deleted = await GameCrud.delete_game_by_id(game_id, current_user.user_id, session)
+    game_deleted = await game_crud.delete_game_by_id(game_id, current_user.user_id, session)
     if game_deleted:
         await redis.delete_game("game:" +str(game_id))
         return {"message": "Game successfully deleted"}
@@ -104,7 +104,7 @@ async def delete_game(game_id: int,
 async def complete_game_setup(game_id: int, 
                               current_user: UserOutSchema = Depends(get_current_active_user),
                               session: AsyncSession = Depends(get_session)):
-    completed_game = await GameCrud.complete_setup(game_id, current_user.user_id, session)
+    completed_game = await game_crud.complete_setup(game_id, current_user.user_id, session)
     if completed_game is None:
         raise HTTPException(status_code=404, detail="Game not found")
     return {"message": "Game setup completed"}
@@ -114,7 +114,7 @@ async def complete_game_setup(game_id: int,
 async def latest_game_setup_status(current_user: UserOutSchema = Depends(get_current_active_user), 
                                    session: AsyncSession = Depends(get_session)):
     user_id = current_user.user_id # Assuming the current user object has an ID attribute
-    setup_status = await GameCrud.get_game_setup_status(session, user_id)
+    setup_status = await game_crud.get_game_setup_status(session, user_id)
     if setup_status is None:
         raise HTTPException(status_code=404, detail="No games found for the current user")
 

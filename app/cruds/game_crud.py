@@ -2,17 +2,17 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 from sqlalchemy.orm import exc as orm_exc
-from app.models.Models import GameModel
-from app.schemas.GameSchema import GameInSchema
-from app.cruds.SymbolCrud import check_if_game_has_paytables, check_if_game_has_symbols
-from app.cruds.LinesCrud import check_if_game_has_lines
-from app.cruds.ReelCrud import check_if_game_has_reels, check_reels_have_minimum_symbols
+from app.models.models import GameModel
+from app.schemas.game_schema import GameInSchema
+from app.cruds.symbol_crud import check_if_game_has_paytables, check_if_game_has_symbols
+from app.cruds.lines_crud import check_if_game_has_lines
+from app.cruds.reel_crud import check_if_game_has_reels, check_reels_have_minimum_symbols
 from fastapi import HTTPException
 
 
 async def create_game(session: AsyncSession, game: GameInSchema, user_id: int):
     game_data = game.dict()
-    game_data['user_id'] = user_id  # Add the user_id to the game data
+    game_data['user_id'] = user_id  
     new_game = GameModel(**game_data)
     session.add(new_game)
     await session.commit()
@@ -35,7 +35,7 @@ async def get_games(session: AsyncSession, user_id: int, skip: int = 0, limit: i
 async def get_game_by_id(game_id: int, user_id: int, session: AsyncSession):
     game = await session.execute(
         select(GameModel)
-        .options(selectinload(GameModel.symbols))  # Eagerly load 'symbols' relationship
+        .options(selectinload(GameModel.symbols))  
         .where(GameModel.game_id == game_id, GameModel.user_id == user_id)
     )
     return game.scalars().first()

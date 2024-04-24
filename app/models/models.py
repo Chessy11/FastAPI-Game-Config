@@ -30,7 +30,10 @@ class SymbolModel(Base):
     game_id = Column(Integer, ForeignKey("games.game_id", ondelete="CASCADE"), nullable=False)
     symbol_name = Column(String, nullable=False)
     symbol_type = Column(Integer, nullable=False)
-
+    image_url = Column(String, nullable=True)  # URL for the symbol image
+    animation_url = Column(String, nullable=True)  # URL for the symbol animation
+    frame_count = Column(Integer, nullable=True)
+    
     owner = relationship("GameModel", back_populates="symbols")
     paytables = relationship("PaytableModel", back_populates="owner", lazy="joined")
 

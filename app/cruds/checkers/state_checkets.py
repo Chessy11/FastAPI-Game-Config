@@ -1,4 +1,4 @@
-from app.models.Models import PaytableModel, ReelsModel, LinesModel
+from app.models.models import PaytableModel, ReelsModel, LinesModel
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from fastapi import HTTPException

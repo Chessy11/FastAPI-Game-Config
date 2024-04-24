@@ -1,8 +1,8 @@
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import delete
-from app.models.Models import LinesModel, GameModel
-from app.schemas.LineSchema import LineInSchema
+from app.models.models import LinesModel, GameModel
+from app.schemas.line_schema import LineInSchema
 from fastapi import HTTPException
 
 

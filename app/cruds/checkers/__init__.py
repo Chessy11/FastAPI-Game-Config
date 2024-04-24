@@ -1,2 +1,2 @@
-from app.models.Models import PaytableModel, ReelsModel, LinesModel
+from app.models.models import PaytableModel, ReelsModel, LinesModel
 
