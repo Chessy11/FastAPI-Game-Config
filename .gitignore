@@ -4,3 +4,6 @@ __pycache__
 test_main.http
 .pytest_cache
 .env
+k8s
+.vscode
+.github
